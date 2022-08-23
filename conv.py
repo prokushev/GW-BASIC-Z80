@@ -1455,6 +1455,9 @@ class Transformer:
             yield token
 
 class PasmoWriter:
+    bios_rst_labels = [
+        'CHKRAM', 'SYNCHR', 'CHRGTR', 'OUTDO', 'DCOMPR', 'GETYPR', 'CALLF', 'KEYINT'
+    ]
     regmap = {
         'BX': 'HL', 'BH': 'H', 'BL': 'L',
         'DX': 'DE', 'DH': 'D', 'DL': 'E',
@@ -1817,6 +1820,8 @@ class PasmoWriter:
     def _gen_instruction_call(self, token):
         assert len(token['operands']) == 1
         op = token['operands'][0]
+        if (op.isalnum() and op in self.bios_rst_labels):
+            return 'RST %s' % op
         if op.isalnum() or (op[0] == '$' and op[1:].isalnum()):
             return 'CALL %s' % op
         raise SyntaxError("Don't know how to generate CALL with arg %s" % op)
