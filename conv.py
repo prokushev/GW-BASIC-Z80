@@ -1,5 +1,5 @@
 #!/usr/bin/python
-# Copyright (c) 2020 Leandro Pereira <leandro@hardinfo.org>
+# Copyright (c) 2020 L. Pereira <l@tia.mat.br>
 # Licensed under GPLv2.
 
 from collections import deque
